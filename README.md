@@ -1,22 +1,52 @@
-alfred-time-since
-==============
+# alfred-time-since
 
-Alfred workflow to conveniently get duration since a UTC time.
-Also available at: [packal/Time Since](http://www.packal.org/workflow/time)
+[![CI](https://github.com/blackboxprogramming/alfred-time-since/actions/workflows/ci.yml/badge.svg)](https://github.com/blackboxprogramming/alfred-time-since/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/blackboxprogramming/alfred-time-since/actions/workflows/codeql.yml/badge.svg)](https://github.com/blackboxprogramming/alfred-time-since/actions/workflows/codeql.yml)
 
-# Install
-Use the packaged workflow [Time_Since.alfredworkflow](https://github.com/meta/repository/raw/master/com.meta/Time_Since.alfredworkflow) from packal.
+Alfred workflow to conveniently get the duration since a UTC time.
 
-# Requirement
-- [node](https://nodejs.org/en/)
+## Install
 
-# How to
+Download the latest `Time_Since.alfredworkflow` from [Releases](https://github.com/blackboxprogramming/alfred-time-since/releases) and double-click to install.
 
-## Get the time
+## Requirements
 
-- `ts (time string)`: eg: `ts 2021-10-29 04:14:50Z`
+- [Alfred](https://www.alfredapp.com/) with Powerpack
+- [Node.js](https://nodejs.org/) >= 14
 
-Two options will appear, where the first option shows the duration since the time until now.
-And the second option shows the exact UTC time convereted to local time.
+## Usage
 
-![image](https://user-images.githubusercontent.com/5732757/139564511-08c91580-c84c-4cb0-99d7-71e8d3657608.png)
+Type `ts` followed by a UTC timestamp in Alfred:
+
+```
+ts 2021-10-29 04:14:50Z
+```
+
+Two results appear:
+1. **Duration** — how long ago the timestamp was (e.g. "3 years")
+2. **Exact time** — the UTC timestamp converted to your local time
+
+## Development
+
+```bash
+# Run tests
+npm test
+
+# Lint
+npm run lint
+```
+
+## Releasing
+
+Push a version tag to trigger a release:
+
+```bash
+git tag v0.0.2
+git push origin v0.0.2
+```
+
+This packages the workflow and creates a GitHub Release with the `.alfredworkflow` file attached.
+
+## License
+
+MIT

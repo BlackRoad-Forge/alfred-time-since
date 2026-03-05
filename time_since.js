@@ -1,8 +1,9 @@
 /*
- * time.js
+ * time_since.js - Alfred workflow for calculating time since a given UTC timestamp
  */
-function timeSince(date) {
-  var seconds = Math.floor((new Date() - date) / 1000);
+function timeSince(date, now) {
+  now = now || new Date();
+  var seconds = Math.floor((now - date) / 1000);
   var interval = seconds / 31536000;
   if (interval > 1) {
     return Math.floor(interval) + " years";
@@ -26,20 +27,23 @@ function timeSince(date) {
   return Math.floor(seconds) + " seconds";
 }
 
-const ts = process.argv[2]
-const d = new Date(Date.parse(ts));
-const since = timeSince(d);
-const exact = d.toDateString() + ',  ' + d.toTimeString()
-const jsonRes = {
-  "items": [
-    {
-      "type": "default",
-      "title": `time since: ${since}`,
-    },
-    {
-      "type": "default",
-      "title": exact,
-    }
-  ]}
+function formatResult(ts) {
+  var d = new Date(Date.parse(ts));
+  var since = timeSince(d);
+  var exact = d.toDateString() + ',  ' + d.toTimeString();
+  return {
+    items: [
+      { type: "default", title: "time since: " + since },
+      { type: "default", title: exact }
+    ]
+  };
+}
 
-console.log(JSON.stringify(jsonRes));
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { timeSince: timeSince, formatResult: formatResult };
+}
+
+if (typeof require !== 'undefined' && require.main === module) {
+  var ts = process.argv[2];
+  console.log(JSON.stringify(formatResult(ts)));
+}

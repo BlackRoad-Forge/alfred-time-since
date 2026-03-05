@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
+        with:
+          node-version: '20'
+
+      - name: Run tests
+        run: npm test
+
+      - name: Package Alfred Workflow
+        run: |
+          zip -r "Time_Since.alfredworkflow" \
+            time_since.js \
+            info.plist \
+            icon.png \
+            time.png \
+            E520ABC0-2394-45C0-AA2E-6D2D04D78518.png
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@da05d552573ad5aba039eaac05058a918a7bf631 # v2.2.2
+        with:
+          files: Time_Since.alfredworkflow
+          generate_release_notes: true

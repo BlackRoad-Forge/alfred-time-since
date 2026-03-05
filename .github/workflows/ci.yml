@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ['18', '20', '22']
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+  validate-workflow:
+    name: Validate Alfred Workflow
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Check required files exist
+        run: |
+          test -f time_since.js || (echo "time_since.js missing" && exit 1)
+          test -f info.plist || (echo "info.plist missing" && exit 1)
+          test -f icon.png || (echo "icon.png missing" && exit 1)
+          echo "All required workflow files present"

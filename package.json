@@ -1,0 +1,27 @@
+{
+  "name": "alfred-time-since",
+  "version": "0.0.1",
+  "description": "Alfred workflow to get duration since a UTC time",
+  "main": "time_since.js",
+  "scripts": {
+    "test": "node test/time_since.test.js",
+    "lint": "node --check time_since.js",
+    "start": "node time_since.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blackboxprogramming/alfred-time-since"
+  },
+  "keywords": [
+    "alfred",
+    "workflow",
+    "time",
+    "utc",
+    "duration"
+  ],
+  "author": "blackboxprogramming",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
